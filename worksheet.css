@@ -1,0 +1,33 @@
+@page {
+  size: A4;
+  margin: 20mm;
+}
+
+.page {
+  page-break-before: always;
+}
+
+.wordlist {
+  margin-top: 5mm;
+  display: flex;
+}
+
+.wordlist-left {
+  flex: 1;
+  margin-right: 10mm;
+}
+
+.wordlist-right {
+  flex: 1;
+  margin-left: 10mm;
+}
+
+.instruction {
+  margin-bottom: 10mm;
+}
+
+.wordlist-item-answer {
+  width: 100%;
+  height: 3mm;
+  border-bottom: 1px solid #000;
+}

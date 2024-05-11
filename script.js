@@ -14,7 +14,50 @@ fileInput.onchange = () => {
     const reader = new FileReader();
     reader.onload = () => {
         const content = reader.result.replace(/\r/g, "").split("\n");
-        console.log(content);
+        let popup = window.open("", "_blank");
+        popup.document.open();
+        popup.document.write("<html><head><title>영단어 학습지</title><link href='worksheet.css' rel='stylesheet' type='text/css' /></head><body onload='window.print();close();'>");
+        let pageCount = content.filter(line => line == "===").length;
+        let lineNumber = 0;
+        for(let i = 0; i < pageCount; i++) {
+            popup.document.write("<div class='page'>")
+            popup.document.write(`
+                <center><h1>${filterXSS(content[lineNumber])}</h1></center>
+                <div class="wordlist">
+                    <div class="wordlist-left">
+            `)
+            popup.document.write("<p class='instruction'>주어진 영단어를 우리말로 바꾸시오.</p>");
+            lineNumber+=2;
+            while(content[lineNumber] != "---") {
+                word = content[lineNumber];
+                popup.document.write(`
+                    <div class="wordlist-item">
+                        <p>${filterXSS(word)}</p>
+                        <div class="wordlist-item-answer"></div>
+                    </div>
+                `);
+                lineNumber++;
+            }
+            lineNumber++;
+            popup.document.write("</div>")
+            popup.document.write("<div class='wordlist-right'>")
+            popup.document.write("<p class='instruction'>주어진 단어를 영단어로 바꾸시오.</p>");
+            while(content[lineNumber] != "===") {
+                word = content[lineNumber];
+                popup.document.write(`
+                    <div class="wordlist-item">
+                        <p>${filterXSS(word)}</p>
+                        <div class="wordlist-item-answer"></div>
+                    </div>
+                `);
+                lineNumber++;
+            }
+            lineNumber++;
+            popup.document.write("</div></div>")
+            popup.document.write("</div>")
+        }
+        popup.document.write("</body></html>");
+        popup.document.close();
     }
     reader.readAsText(selectedFile);
 };

@@ -16,7 +16,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 body::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
+  background: #000;
 }
 
 .top {

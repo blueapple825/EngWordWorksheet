@@ -1,4 +1,5 @@
 const bodyElement = document.querySelector("body");
+const fileInput = document.getElementById("fileUpload");
 let mousePos = [0, 0];
 let bgGradientPos = [0, 0];
 let lastFrameTime = performance.now();
@@ -7,6 +8,16 @@ bodyElement.addEventListener("mousemove",function(e){
     mousePos[0] = e.pageX;
     mousePos[1] = e.pageY;
 })
+
+fileInput.onchange = () => {
+    const selectedFile = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+        const content = reader.result.replace(/\r/g, "").split("\n");
+        console.log(content);
+    }
+    reader.readAsText(selectedFile);
+};
 
 function backgroundAnimation() {
     const currentTime = performance.now();
